@@ -3,8 +3,9 @@
 ## 1. Generative AI Fundamentals
 ### Learn First
 
-- [Databricks Generative AI Overview](https://docs.databricks.com/en/generative-ai/generative-ai.html)
-- [Generative AI Capabilities Guide](https://docs.databricks.com/aws/en/generative-ai/guide/mosaic-ai-gen-ai-capabilities)
+[Databricks Generative AI Overview](https://docs.databricks.com/en/generative-ai/generative-ai.html)
+
+[Generative AI Capabilities Guide](https://docs.databricks.com/aws/en/generative-ai/guide/mosaic-ai-gen-ai-capabilities)
 
 ### Subtopics
 - Introduction to Generative AI
