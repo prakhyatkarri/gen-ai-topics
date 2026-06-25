@@ -1,74 +1,78 @@
 # gen-ai-topics
 
-1. Generative AI Fundamentals
-Learn First
+## 1. Generative AI Fundamentals
+### Learn First
 [Databricks Generative AI Overview](https://docs.databricks.com/en/generative-ai/generative-ai.html)
 [Generative AI Capabilities Guide](https://docs.databricks.com/aws/en/generative-ai/guide/mosaic-ai-gen-ai-capabilities)
-Subtopics
-Introduction to Generative AI
-Foundation Models
-Large Language Models (LLMs)
-Transformers
-Attention Mechanisms
-Tokenization
-Prompt Engineering
-Context Windows
-Hallucinations
-AI Agents
-Multimodal AI
-2. Databricks Lakehouse for GenAI
-Learn
+
+### Subtopics
+- Introduction to Generative AI
+- Foundation Models
+- Large Language Models (LLMs)
+- Transformers
+- Attention Mechanisms
+- Tokenization
+- Prompt Engineering
+- Context Windows
+- Hallucinations
+- AI Agents
+- Multimodal AI
+
+## 2. Databricks Lakehouse for GenAI
+### Learn
 [AI and ML on Databricks](https://docs.databricks.com/en/generative-ai/generative-ai.html)
-Subtopics
-Lakehouse Architecture
-Data Lake vs Warehouse
-Delta Lake
-Workspace Architecture
-Compute Resources
-Serverless Compute
-Data Governance
-Metadata Management
-Data Lineage
-AI Workloads on Lakehouse
-3. Unity Catalog for AI Governance
-Learn
+
+### Subtopics
+- Lakehouse Architecture
+- Data Lake vs Warehouse
+- Delta Lake
+- Workspace Architecture
+- Compute Resources
+- Serverless Compute
+- Data Governance
+- Metadata Management
+- Data Lineage
+- AI Workloads on Lakehouse
+
+## 3. Unity Catalog for AI Governance
+### Learn
 [Unity Catalog Documentation](https://docs.databricks.com/en/data-governance/unity-catalog/index.html)
-Subtopics
-Catalogs
-Schemas
-Tables
-Volumes
-Functions
-Access Control
-Row-Level Security
-Data Lineage
-Audit Logs
-Governance for AI Assets
+### Subtopics
+- Catalogs
+- Schemas
+- Tables
+- Volumes
+- Functions
+- Access Control
+- Row-Level Security
+- Data Lineage
+- Audit Logs
+- Governance for AI Assets
 
 Databricks positions Unity Catalog as the central governance layer for data, models, vector indexes, tools, and AI assets.
 
-4. Foundation Models
-Learn
+## 4. Foundation Models
+### Learn
 [Foundation Models Documentation](https://docs.databricks.com/aws/en/machine-learning/model-serving/score-foundation-models)
-Subtopics
-Databricks Foundation Models
-Open Models
-Hosted Models
-External Models
-Llama Models
-Claude Models
-GPT Models
-Model Selection
-Context Length
-Token Costs
-Model Evaluation
+### Subtopics
+- Databricks Foundation Models
+- Open Models
+- Hosted Models
+- External Models
+- Llama Models
+- Claude Models
+- GPT Models
+- Model Selection
+- Context Length
+- Token Costs
+- Model Evaluation
 
 Databricks provides Foundation Model APIs using OpenAI-compatible endpoints.
 
-5. AI Playground
-Learn
+## 5. AI Playground
+### Learn
 [AI Playground Documentation](https://docs.databricks.com/en/generative-ai/generative-ai.html)
-Subtopics
+### Subtopics
 Prompt Testing
 Model Comparison
 Parameter Tuning
@@ -76,27 +80,28 @@ Prompt Templates
 Chat Interfaces
 Agent Prototyping
 Experiment Tracking
-6. Prompt Engineering
-Learn
+
+## 6. Prompt Engineering
+### Learn
 [Mosaic AI GenAI Capabilities](https://docs.databricks.com/aws/en/generative-ai/guide/mosaic-ai-gen-ai-capabilities)
-Subtopics
-Zero-Shot Prompting
-Few-Shot Prompting
-Chain of Thought
-ReAct Pattern
-Role Prompting
-Structured Outputs
-JSON Outputs
-Prompt Templates
-Prompt Versioning
-Prompt Optimization
+### Subtopics
+- Zero-Shot Prompting
+- Few-Shot Prompting
+- Chain of Thought
+- ReAct Pattern
+- Role Prompting
+- Structured Outputs
+- JSON Outputs
+- Prompt Templates
+- Prompt Versioning
+- Prompt Optimization
 
 Databricks supports prompt engineering through AI Playground and MLflow Prompt Optimization.
 
-7. Embeddings
-Learn
+## 7. Embeddings
+### Learn
 [Vector Search Documentation](https://docs.databricks.com/en/generative-ai/generative-ai.html)
-Subtopics
+### Subtopics
 Embedding Fundamentals
 Text Embeddings
 Embedding Models
@@ -105,10 +110,11 @@ Similarity Search
 Embedding Pipelines
 Embedding Endpoints
 Embedding Evaluation
-8. Vector Search
-Learn
+
+## 8. Vector Search
+### Learn
 [Mosaic AI Vector Search Documentation](https://docs.databricks.com/en/generative-ai/generative-ai.html)
-Subtopics
+### Subtopics
 Vector Databases
 Vector Indexes
 ANN Search
