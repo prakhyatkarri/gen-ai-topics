@@ -299,3 +299,4 @@ Monitoring
 Responsible AI
 
 This learning path closely matches the skills covered across Databricks' GenAI platform: Foundation Models, Vector Search, RAG, Agents, MLflow, AI Gateway, Unity Catalog, deployment, and governance.
+
