@@ -2,8 +2,9 @@
 
 ## 1. Generative AI Fundamentals
 ### Learn First
-[Databricks Generative AI Overview](https://docs.databricks.com/en/generative-ai/generative-ai.html)
-[Generative AI Capabilities Guide](https://docs.databricks.com/aws/en/generative-ai/guide/mosaic-ai-gen-ai-capabilities)
+
+- [Databricks Generative AI Overview](https://docs.databricks.com/en/generative-ai/generative-ai.html)
+- [Generative AI Capabilities Guide](https://docs.databricks.com/aws/en/generative-ai/guide/mosaic-ai-gen-ai-capabilities)
 
 ### Subtopics
 - Introduction to Generative AI
@@ -73,13 +74,13 @@ Databricks provides Foundation Model APIs using OpenAI-compatible endpoints.
 ### Learn
 [AI Playground Documentation](https://docs.databricks.com/en/generative-ai/generative-ai.html)
 ### Subtopics
-Prompt Testing
-Model Comparison
-Parameter Tuning
-Prompt Templates
-Chat Interfaces
-Agent Prototyping
-Experiment Tracking
+- Prompt Testing
+- Model Comparison
+- Parameter Tuning
+- Prompt Templates
+- Chat Interfaces
+- Agent Prototyping
+- Experiment Tracking
 
 ## 6. Prompt Engineering
 ### Learn
@@ -102,14 +103,14 @@ Databricks supports prompt engineering through AI Playground and MLflow Prompt O
 ### Learn
 [Vector Search Documentation](https://docs.databricks.com/en/generative-ai/generative-ai.html)
 ### Subtopics
-Embedding Fundamentals
-Text Embeddings
-Embedding Models
-Semantic Search
-Similarity Search
-Embedding Pipelines
-Embedding Endpoints
-Embedding Evaluation
+- Embedding Fundamentals
+- Text Embeddings
+- Embedding Models
+- Semantic Search
+- Similarity Search
+- Embedding Pipelines
+- Embedding Endpoints
+- Embedding Evaluation
 
 ## 8. Vector Search
 ### Learn
