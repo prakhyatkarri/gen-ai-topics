@@ -1,0 +1,47 @@
+# Document Search Engine Configuration
+
+# Index Configuration
+index:
+  directory: "./index"  # Directory to store index files
+  auto_save: true       # Automatically save index after changes
+  
+# Search Configuration
+search:
+  default_top_k: 10     # Default number of search results
+  min_token_length: 3   # Minimum token length for indexing
+  enable_phrase_search: true  # Enable exact phrase searching
+  
+# Document Processing
+processing:
+  supported_formats:
+    - pdf
+    - docx
+    - doc
+    - md
+    - markdown
+  
+  recursive_search: true  # Search subdirectories when indexing
+  skip_hidden_files: true # Skip hidden files (starting with .)
+  
+  # PDF specific settings
+  pdf:
+    extract_images: false  # Extract text from images in PDFs
+  
+  # Word specific settings
+  word:
+    extract_tables: true   # Extract text from tables
+  
+  # Markdown specific settings
+  markdown:
+    preserve_formatting: true  # Preserve markdown syntax
+
+# Logging Configuration
+logging:
+  level: "INFO"         # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+# Performance Settings
+performance:
+  max_file_size_mb: 100  # Maximum file size to process (MB)
+  batch_size: 100        # Number of documents to process in batch
+  cache_size: 1000       # Number of documents to cache in memory

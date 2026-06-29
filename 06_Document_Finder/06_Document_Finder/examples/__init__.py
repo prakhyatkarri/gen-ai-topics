@@ -1,0 +1,1 @@
+"""Example scripts demonstrating Document Search Engine usage."""
