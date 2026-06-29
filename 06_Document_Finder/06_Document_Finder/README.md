@@ -53,6 +53,227 @@ A production-grade, high-performance document search engine built in Python that
    * Index persistence
    * Query result ranking and snippets
 
+### System Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                      Document Search Engine                         │
+│                     (DocumentSearchEngine)                          │
+└───────────────────────────┬─────────────────────────────────────────┘
+                            │
+                ┌───────────┴───────────┐
+                │                       │
+                ▼                       ▼
+    ┌─────────────────────┐  ┌──────────────────────┐
+    │ Document Processor  │  │  Document Indexer    │
+    │                     │  │                      │
+    │ ┌─────────────────┐ │  │ ┌────────────────┐ │
+    │ │  PDF Parser     │ │  │ │ Tokenizer      │ │
+    │ │  (PyPDF2)       │ │  │ │ & Stop Words   │ │
+    │ └─────────────────┘ │  │ └────────────────┘ │
+    │                     │  │                      │
+    │ ┌─────────────────┐ │  │ ┌────────────────┐ │
+    │ │  Word Parser    │ │  │ │ Inverted Index │ │
+    │ │  (python-docx)  │ │  │ │ (term→docs)    │ │
+    │ └─────────────────┘ │  │ └────────────────┘ │
+    │                     │  │                      │
+    │ ┌─────────────────┐ │  │ ┌────────────────┐ │
+    │ │ Markdown Parser │ │  │ │ TF-IDF Scorer  │ │
+    │ │ (markdown)      │ │  │ │ & Ranker       │ │
+    │ └─────────────────┘ │  │ └────────────────┘ │
+    │                     │  │                      │
+    │ ┌─────────────────┐ │  │ ┌────────────────┐ │
+    │ │ Text Extractor  │ │  │ │ Phrase Search  │ │
+    │ │ & Metadata      │ │  │ │ (Positional)   │ │
+    │ └─────────────────┘ │  │ └────────────────┘ │
+    └─────────────────────┘  └──────────────────────┘
+                │                       │
+                └───────────┬───────────┘
+                            ▼
+                    ┌───────────────┐
+                    │ Persistent    │
+                    │ Storage       │
+                    │ (pickle)      │
+                    └───────────────┘
+                            │
+                            ▼
+                    ┌───────────────┐
+                    │  Index Files  │
+                    │  - index.pkl  │
+                    │  - docs.pkl   │
+                    └───────────────┘
+```
+
+### Data Flow Diagrams
+
+#### Indexing Flow
+
+```
+┌──────────────┐
+│   Documents  │ (PDF, DOCX, MD)
+└──────┬───────┘
+       │
+       │ 1. Read Files
+       ▼
+┌──────────────────────────┐
+│  DocumentProcessor       │
+│                          │
+│  • Detect file type      │
+│  • Extract text          │
+│  • Extract metadata      │
+│  • Count words/chars     │
+└──────────┬───────────────┘
+           │
+           │ 2. Raw Text + Metadata
+           ▼
+┌──────────────────────────┐
+│  DocumentIndexer         │
+│                          │
+│  • Tokenize text         │
+│  • Remove stop words     │
+│  • Build inverted index  │
+│  • Store positions       │
+│  • Calculate stats       │
+└──────────┬───────────────┘
+           │
+           │ 3. Indexed Data
+           ▼
+┌──────────────────────────┐
+│  Inverted Index          │
+│                          │
+│  {                       │
+│    "machine": {          │
+│      "doc1": [5, 23],    │
+│      "doc2": [1, 45]     │
+│    },                    │
+│    "learning": {...}     │
+│  }                       │
+└──────────┬───────────────┘
+           │
+           │ 4. Serialize
+           ▼
+┌──────────────────────────┐
+│  Disk Storage            │
+│                          │
+│  • index.pkl             │
+│  • docs.pkl              │
+└──────────────────────────┘
+```
+
+#### Search Flow
+
+```
+┌──────────────┐
+│ User Query   │ "machine learning"
+└──────┬───────┘
+       │
+       │ 1. Query String
+       ▼
+┌──────────────────────────┐
+│  DocumentSearchEngine    │
+│                          │
+│  • Validate query        │
+│  • Choose search type    │
+│    (keyword/phrase)      │
+└──────────┬───────────────┘
+           │
+           │ 2. Processed Query
+           ▼
+┌──────────────────────────┐
+│  DocumentIndexer         │
+│                          │
+│  • Tokenize query        │
+│  • Lookup terms in index │
+│  • Find matching docs    │
+└──────────┬───────────────┘
+           │
+           │ 3. Raw Matches
+           │
+           ├─────────────────────────┐
+           │                         │
+           ▼                         ▼
+┌──────────────────────┐   ┌─────────────────────┐
+│  TF-IDF Scoring      │   │  Phrase Matching    │
+│                      │   │  (if phrase search) │
+│  • Calculate TF      │   │                     │
+│  • Calculate IDF     │   │  • Check positions  │
+│  • Compute score     │   │  • Verify sequence  │
+│  • Rank results      │   │  • Exact matches    │
+└──────────┬───────────┘   └─────────┬───────────┘
+           │                         │
+           └───────────┬─────────────┘
+                       │
+                       │ 4. Scored Results
+                       ▼
+           ┌──────────────────────┐
+           │  Result Ranking      │
+           │                      │
+           │  • Sort by score     │
+           │  • Apply top_k limit │
+           │  • Add metadata      │
+           └──────────┬───────────┘
+                      │
+                      │ 5. Final Results
+                      ▼
+           ┌──────────────────────┐
+           │  Result Formatting   │
+           │                      │
+           │  • Extract snippets  │
+           │  • Add context       │
+           │  • Highlight matches │
+           └──────────┬───────────┘
+                      │
+                      │ 6. Formatted Output
+                      ▼
+           ┌──────────────────────┐
+           │  Results to User     │
+           │                      │
+           │  [{                  │
+           │    "file": "doc.md", │
+           │    "score": 0.85,    │
+           │    "snippet": "...", │
+           │    "metadata": {...} │
+           │  }]                  │
+           └──────────────────────┘
+```
+
+#### Component Interaction Flow
+
+```
+     User Application
+           │
+           │ API Calls
+           ▼
+    ┌─────────────────────────────────┐
+    │  DocumentSearchEngine (Facade)  │
+    │                                 │
+    │  index_document()               │
+    │  index_directory()              │
+    │  search()                       │
+    │  get_statistics()               │
+    └─────────────────────────────────┘
+           │            │
+           │            │
+   ┌───────┘            └──────────┐
+   │                               │
+   │                               │
+   ▼                               ▼
+┌─────────────────┐      ┌──────────────────┐
+│ DocumentProcessor│      │ DocumentIndexer  │
+│                 │      │                  │
+│ process()       │◄─────┤ add_document()   │
+│ extract_text()  │      │ search()         │
+│                 │      │ get_stats()      │
+└─────────────────┘      └──────────────────┘
+         │                        │
+         │                        │
+         ▼                        ▼
+    ┌─────────┐           ┌──────────────┐
+    │ File    │           │ Index Store  │
+    │ System  │           │ (Memory/Disk)│
+    └─────────┘           └──────────────┘
+```
+
 ## Installation
 
 ### Prerequisites
