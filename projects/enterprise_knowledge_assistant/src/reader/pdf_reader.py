@@ -1,8 +1,5 @@
 import logging
-import sys
 from typing import Optional
-from pathlib import Path
-from datetime import datetime
 
 try:
     import PyPDF2
@@ -10,7 +7,7 @@ except Exception as e:
     print("Cannot import PyPDF2: ", e)
 
 
-class DocumentService:
+class PDFReader:
 
     def __init__(self, logger: Optional[logging.Logger]):
         self.logger = logger
