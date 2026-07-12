@@ -24,6 +24,7 @@ class PDFReader:
         try:
             with open(file_name, "rb") as file:
                 pdf_reader = PyPDF2.PdfReader(file)
+                metadata = pdf_reader.metadata
                 for page_num, page in enumerate(pdf_reader.pages):
                     try:
                         page_text = page.extract_text()
@@ -35,7 +36,11 @@ class PDFReader:
                         )
                         continue
 
-            return "\n".join(text)
+            # return "\n".join(text)
+            return {
+                "content": "\n".join(text),
+                "metadata": metadata
+            }
 
         except Exception as e:
             self.logger.error(f"Error reading PDF {file_name}: {str(e)}")
@@ -43,7 +48,8 @@ class PDFReader:
 
         return text
 
-    def read_document(self, file_name: str) -> list[str]:
+    # def read_document(self, file_name: str) -> list[str]:
+    def read_document(self, file_name: str) -> dict:
         """
         Returns contents of PDF file
         """
