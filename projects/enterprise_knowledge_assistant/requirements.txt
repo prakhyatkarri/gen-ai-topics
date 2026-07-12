@@ -1,3 +1,6 @@
 PyPDF2==3.0.0
 pyspark==4.0.0
 langchain-text-splitters==1.1.2
+psycopg2-binary==2.9.9
+databricks-sdk==0.120.0
+databricks-langchain

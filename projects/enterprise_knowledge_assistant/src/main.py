@@ -6,6 +6,7 @@ from datetime import datetime
 from reader.pdf_reader import PDFReader
 from utilities.chunker import ChunkService
 from utilities.documenter import DocumentService
+from utilities.embeddder import EmbeddingService
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -29,8 +30,8 @@ logger.addHandler(console_handler)
 
 
 pdf_reader = PDFReader(logger)
-
-files = [f for f in Path("datasets").iterdir() if f.is_file()]
+datasets_path = "k:/Learning/Git/gen-ai-topics/projects/enterprise_knowledge_assistant/datasets"
+files = [f for f in Path(datasets_path).iterdir() if f.is_file()]
 contents = []
 for id, file in enumerate(files, start=1):
     file_name = str(file)
@@ -62,6 +63,19 @@ for c in contents:
     for index, item in enumerate(content):
         documents.append(document_service.create_document(item, document_id, metadata))
 
+texts = []
+for c in contents:     
+    content = str(c['content']),
+    metadata = c['metadata']
+    document_id = metadata['document_id']
+    for index, item in enumerate(content):
+        texts.append(
+            {
+                'content': item,
+                "metadata": metadata
+            }
+        )
+
 
 # # chunks = [
 #         #     {
@@ -78,5 +92,19 @@ for c in contents:
 # # delta_writer = DeltaWriter(logger)
 # # delta_writer.write_to_delta_table(spark, contents, "")
 
-chunked_documents = chunkService.chunk_by_length(documents, 10, 2)
-print(chunked_documents[0])
+# chunked_documents = chunkService.chunk_documents_by_length(documents, 10, 2)
+chunked_documents = chunkService.chunk_text_by_length(texts)
+# print(chunked_documents[0])
+
+embedder_service = EmbeddingService(logger)
+
+embeddings = []
+
+# for chunk in chunked_documents:
+chunk = chunked_documents[0]
+embeddings.append({
+    'embeddings': embedder_service.create_embedding(chunk['content']),
+    'metadata': chunk['metadata']
+})
+
+print(len(embeddings))
