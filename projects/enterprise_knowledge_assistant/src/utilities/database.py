@@ -63,6 +63,8 @@ class DatabaseService(logging.Logger):
         return self.connection.closed
     
     def execute(self, query):
+        if self.connection is None:
+            self.get_connection()
         # Execute queries
         with self.connection.cursor() as cursor:
             cursor.execute(query)
@@ -77,8 +79,8 @@ class DatabaseService(logging.Logger):
 # results = db_service.execute("select * from playing_with_lakebase;")
 # for i in results:
 #     print(i)
-from databricks.sdk import WorkspaceClient
+# from databricks.sdk import WorkspaceClient
 
 # Initialize the Databricks Workspace Client 
 # (It automatically reads DATABRICKS_HOST, Token, or M2M environment variables)
-print(WorkspaceClient().token_management.get("cc9e9369ed1e2ec1d1005f85d4c5bece9f64c1d4e4932a2015f9ecdfe41fa297"))
+# print(WorkspaceClient().token_management.get("cc9e9369ed1e2ec1d1005f85d4c5bece9f64c1d4e4932a2015f9ecdfe41fa297"))

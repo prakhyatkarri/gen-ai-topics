@@ -7,6 +7,7 @@ from reader.pdf_reader import PDFReader
 from utilities.chunker import ChunkService
 from utilities.documenter import DocumentService
 from utilities.embeddder import EmbeddingService
+from utilities.database import DatabaseService
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -34,8 +35,8 @@ datasets_path = "k:/Learning/Git/gen-ai-topics/projects/enterprise_knowledge_ass
 files = [f for f in Path(datasets_path).iterdir() if f.is_file()]
 contents = []
 for id, file in enumerate(files, start=1):
-    file_name = str(file)
-    pdf_document = pdf_reader.read_document(file_name)
+    file_name = file.name
+    pdf_document = pdf_reader.read_document(str(file))
     content = pdf_document['content']
     metadata = {
         "document_id": f"document_datasets_{id}",
@@ -102,9 +103,19 @@ embeddings = []
 
 # for chunk in chunked_documents:
 chunk = chunked_documents[0]
+
 embeddings.append({
     'embeddings': embedder_service.create_embedding(chunk['content']),
     'metadata': chunk['metadata']
 })
 
-print(len(embeddings))
+db_service = DatabaseService(logger)
+item = embeddings[0]
+# for item in embeddings:
+for em in item['embeddings']:    
+    chunk_name = item['metadata']['file_name'],
+    chunk_value = em
+    print(f"chunk name: {chunk_name}, embedding: {chunk_value}")
+
+    results = db_service.execute(f"INSERT INTO doc_embeddings(name, value) VALUES (1, {chunk_value});")
+    print(f"DB Results: {results}")
