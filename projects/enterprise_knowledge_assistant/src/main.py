@@ -35,7 +35,7 @@ datasets_path = "k:/Learning/Git/gen-ai-topics/projects/enterprise_knowledge_ass
 files = [f for f in Path(datasets_path).iterdir() if f.is_file()]
 contents = []
 for id, file in enumerate(files, start=1):
-    file_name = file.name
+    file_name = file.stem
     pdf_document = pdf_reader.read_document(str(file))
     content = pdf_document['content']
     metadata = {
@@ -114,8 +114,7 @@ item = embeddings[0]
 # for item in embeddings:
 for em in item['embeddings']:    
     chunk_name = item['metadata']['file_name'],
-    chunk_value = em
-    print(f"chunk name: {chunk_name}, embedding: {chunk_value}")
+    chunk_value = str(em)
 
-    results = db_service.execute(f"INSERT INTO doc_embeddings(name, value) VALUES (1, {chunk_value});")
+    results = db_service.execute(f"INSERT INTO doc_embeddings(name, value) VALUES ('1', '{chunk_value}');", True)
     print(f"DB Results: {results}")

@@ -1,6 +1,7 @@
 import psycopg2
 import logging
 
+
 class DatabaseService(logging.Logger):
     # Define connection parameters
     DB_HOST = "ep-hidden-sound-d8ygik36.database.us-east-2.cloud.databricks.com"
@@ -11,10 +12,8 @@ class DatabaseService(logging.Logger):
 
     connection = None
 
-
     def __init__(self, logger):
         self.logger = logger
-
 
     def get_connection(self):
         if self.connection:
@@ -22,7 +21,7 @@ class DatabaseService(logging.Logger):
 
         from databricks.sdk import WorkspaceClient
 
-        # Initialize the Databricks Workspace Client 
+        # Initialize the Databricks Workspace Client
         # (It automatically reads DATABRICKS_HOST, Token, or M2M environment variables)
         w = WorkspaceClient()
 
@@ -43,7 +42,7 @@ class DatabaseService(logging.Logger):
             dbname=db_name,
             user=db_user,
             password=db_token,
-            sslmode="require"
+            sslmode="require",
         )
 
         # Execute queries
@@ -54,24 +53,23 @@ class DatabaseService(logging.Logger):
         self.connection = conn
 
         return self.connection
-    
 
     def close_connection(self):
         if self.connection:
             self.connection.close()
 
         return self.connection.closed
-    
-    def execute(self, query):
+
+    def execute(self, query: str, commit: bool):
         if self.connection is None:
             self.get_connection()
         # Execute queries
         with self.connection.cursor() as cursor:
             cursor.execute(query)
+            if commit:
+                self.connection.commit()
+                return
             return cursor.fetchall()
-
-    
-
 
 
 # db_service = DatabaseService(logging.getLogger(__name__))
@@ -81,6 +79,6 @@ class DatabaseService(logging.Logger):
 #     print(i)
 # from databricks.sdk import WorkspaceClient
 
-# Initialize the Databricks Workspace Client 
+# Initialize the Databricks Workspace Client
 # (It automatically reads DATABRICKS_HOST, Token, or M2M environment variables)
 # print(WorkspaceClient().token_management.get("cc9e9369ed1e2ec1d1005f85d4c5bece9f64c1d4e4932a2015f9ecdfe41fa297"))

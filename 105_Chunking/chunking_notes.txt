@@ -1,0 +1,14 @@
+## Chunking Strategies
+
+1. Fixed Length
+2. Sentence based
+3. Paragraph based
+4. Sliding window based
+5. Recursive chunking
+6. Semantic chunking
+7. Context-Enriched chunking
+8. Modality-specific chunking
+9. Agentic chunking
+10. Subdocument chunking
+11. Hybrid chunking
+
